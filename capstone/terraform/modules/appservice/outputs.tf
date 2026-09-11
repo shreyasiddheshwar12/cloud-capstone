@@ -1,11 +1,15 @@
-output "app_url" {
-  value = "https://${azurerm_linux_web_app.app.default_hostname}"
+output "web_app_id" {
+  value = azurerm_linux_web_app.this.id
 }
 
-output "plan_id" {
-  value = azurerm_service_plan.plan.id
+output "web_app_name" {
+  value = azurerm_linux_web_app.this.name
 }
 
-output "app_id" {
-  value = azurerm_linux_web_app.app.id
+output "default_hostname" {
+  value = azurerm_linux_web_app.this.default_hostname
+}
+
+output "principal_id" {
+  value = azurerm_linux_web_app.this.identity[0].principal_id
 }
