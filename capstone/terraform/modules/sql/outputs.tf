@@ -1,11 +1,15 @@
 output "server_name" {
-  value = azurerm_mssql_server.sql.name
+  value = azurerm_mssql_server.this.name
 }
 
-output "db_name" {
-  value = azurerm_mssql_database.db.name
+output "server_fqdn" {
+  value = azurerm_mssql_server.this.fully_qualified_domain_name
 }
 
-output "server_id" {
-  value = azurerm_mssql_server.sql.id
+output "database_name" {
+  value = azurerm_mssql_database.this.name
+}
+
+output "database_id" {
+  value = azurerm_mssql_database.this.id
 }
