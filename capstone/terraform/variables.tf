@@ -1,9 +1,25 @@
+variable "subscription_id" {
+  type = string
+}
+
 variable "resource_group_name" {
+  type    = string
   default = "cloud-capstone"
 }
 
-variable "location" {
-  default = "centralindia"
+variable "sql_server_name" {
+  type    = string
+  default = "sqlpharma12"
+}
+
+variable "database_name" {
+  type    = string
+  default = "recalldb"
+}
+
+variable "sql_admin_login" {
+  type    = string
+  default = "sqladmin"
 }
 
 variable "sql_admin_password" {
@@ -11,25 +27,17 @@ variable "sql_admin_password" {
   sensitive = true
 }
 
+variable "service_plan_name" {
+  type    = string
+  default = "asp-pharma12"
+}
 
-variable "environment" {}
+variable "recall_api_name" {
+  type    = string
+  default = "recallapi-pharma12"
+}
 
-variable "resource_group_name" {}
-
-variable "location" {}
-
-variable "sql_server_name" {}
-
-variable "sql_database_name" {}
-
-variable "app_service_plan" {}
-
-variable "recall_api_name" {}
-
-variable "appinsights_name" {}
-
-variable "storage_account_name" {}
-
-variable "sql_admin_password" {
-  sensitive = true
+variable "application_insights_name" {
+  type    = string
+  default = "appinsights-pharma12"
 }
