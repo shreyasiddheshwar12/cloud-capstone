@@ -23,7 +23,7 @@ module "monitoring" {
 }
 
 module "recall_api" {
-  source = "./modules/app-service"
+  source = "./modules/appservice"
 
   service_plan_name              = var.service_plan_name
   web_app_name                   = var.recall_api_name
