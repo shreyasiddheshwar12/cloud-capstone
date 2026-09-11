@@ -13,5 +13,13 @@ resource "azurerm_linux_web_app" "app" {
   location            = var.location
   service_plan_id     = azurerm_service_plan.plan.id
 
-  site_config {}
+  site_config {
+    application_stack {
+      node_version = "20-lts"
+    }
+  }
+
+  app_settings = {
+    WEBSITE_NODE_DEFAULT_VERSION = "~20"
+  }
 }
