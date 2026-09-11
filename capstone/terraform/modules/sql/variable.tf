@@ -1,9 +1,24 @@
-variable "server_name" {}
-variable "db_name" {}
-variable "resource_group_name" {}
-variable "location" {}
-variable "admin_login" {}
+variable "server_name" {
+  type = string
+}
+
+variable "database_name" {
+  type = string
+}
+
+variable "resource_group_name" {
+  type = string
+}
+
+variable "location" {
+  type = string
+}
+
+variable "admin_login" {
+  type = string
+}
 
 variable "admin_password" {
+  type      = string
   sensitive = true
 }
