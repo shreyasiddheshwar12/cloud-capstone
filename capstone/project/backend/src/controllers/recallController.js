@@ -1,5 +1,4 @@
-const sql = require("mssql");
-const { config } = require("../db");
+const { sql, getConnection } = require("../db");
 
 const createRecall = async (req, res) => {
   try {
@@ -11,7 +10,7 @@ const createRecall = async (req, res) => {
       reason
     } = req.body;
 
-    const pool = await sql.connect(config);
+    const pool = await getConnection();
 
     await pool.request()
       .input("recallId", sql.NVarChar, recallId)
@@ -55,7 +54,7 @@ const createRecall = async (req, res) => {
 
 const getRecall = async (req, res) => {
   try {
-    const pool = await sql.connect(config);
+    const pool = await getConnection();
 
     const result = await pool.request()
       .input("recallId", sql.NVarChar, req.params.id)
@@ -78,7 +77,7 @@ const getRecall = async (req, res) => {
 
 const publishRecall = async (req, res) => {
   try {
-    const pool = await sql.connect(config);
+    const pool = await getConnection();
 
     await pool.request()
       .input("recallId", sql.NVarChar, req.params.id)
@@ -105,7 +104,7 @@ const acknowledgeRecall = async (req, res) => {
   try {
     const { partnerId } = req.body;
 
-    const pool = await sql.connect(config);
+    const pool = await getConnection();
 
     await pool.request()
       .input("recallId", sql.NVarChar, req.params.id)
