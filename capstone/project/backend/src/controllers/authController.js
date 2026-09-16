@@ -42,6 +42,9 @@ async function login(req, res) {
       }
     );
 
+    console.log("JWT TOKEN GENERATED:");
+console.log(token);
+
     res.json({
       token,
       user

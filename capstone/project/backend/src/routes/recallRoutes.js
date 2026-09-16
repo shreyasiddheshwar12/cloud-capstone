@@ -1,4 +1,5 @@
 const express = require("express");
+const router = express.Router();
 
 const {
   createRecall,
@@ -6,18 +7,6 @@ const {
   publishRecall,
   acknowledgeRecall
 } = require("../controllers/recallController");
-
-const router = express.Router();
-
-router.post("/", createRecall);
-
-router.get("/:id", getRecall);
-
-router.post("/:id/publish", publishRecall);
-
-router.post("/:id/acknowledgements", acknowledgeRecall);
-
-module.exports = router;
 
 const verifyToken = require("../middleware/authMiddleware");
 
@@ -28,3 +17,5 @@ router.get("/:id", verifyToken, getRecall);
 router.post("/:id/publish", verifyToken, publishRecall);
 
 router.post("/:id/acknowledgements", verifyToken, acknowledgeRecall);
+
+module.exports = router;
