@@ -18,3 +18,13 @@ router.post("/:id/publish", publishRecall);
 router.post("/:id/acknowledgements", acknowledgeRecall);
 
 module.exports = router;
+
+const verifyToken = require("../middleware/authMiddleware");
+
+router.post("/", verifyToken, createRecall);
+
+router.get("/:id", verifyToken, getRecall);
+
+router.post("/:id/publish", verifyToken, publishRecall);
+
+router.post("/:id/acknowledgements", verifyToken, acknowledgeRecall);
