@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const { getConnection } = require("../db");
 
 async function login(req, res) {
@@ -27,7 +28,24 @@ async function login(req, res) {
       });
     }
 
-    res.json(result.recordset[0]);
+    const user = result.recordset[0];
+
+    const token = jwt.sign(
+      {
+        userId: user.UserId,
+        email: user.Email,
+        role: user.RoleName
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h"
+      }
+    );
+
+    res.json({
+      token,
+      user
+    });
 
   } catch (err) {
     console.error(err);
