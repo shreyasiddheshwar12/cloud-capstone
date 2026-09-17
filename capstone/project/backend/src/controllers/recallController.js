@@ -68,9 +68,10 @@ const createRecall = async (req, res) => {
       medicineName,
       batchNumber,
       severity,
-      reason,
-      createdBy
+      reason
     } = req.body;
+
+    const createdBy = req.user.userId;
 
     if (
       !recallId ||
@@ -78,8 +79,7 @@ const createRecall = async (req, res) => {
       !medicineName ||
       !batchNumber ||
       !severity ||
-      !reason ||
-      !createdBy
+      !reason
     ) {
       return res.status(400).json({
         error:

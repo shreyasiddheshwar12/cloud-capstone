@@ -1,9 +1,19 @@
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { getConnection } = require("../db");
 
 async function login(req, res) {
+
   try {
-    const { email } = req.body;
+
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+
+      return res.status(400).json({
+        message: "Email and password required"
+      });
+    }
 
     const pool = await getConnection();
 
@@ -12,23 +22,37 @@ async function login(req, res) {
       .input("email", email)
       .query(`
         SELECT
-            u.UserId,
-            u.FullName,
-            u.Email,
-            r.RoleName
+          u.UserId,
+          u.FullName,
+          u.Email,
+          u.PasswordHash,
+          r.RoleName
         FROM Users u
-        INNER JOIN Roles r
-            ON u.RoleId = r.RoleId
-        WHERE u.Email = @email
+        JOIN Roles r
+          ON u.RoleId = r.RoleId
+        WHERE u.Email=@email
       `);
 
     if (result.recordset.length === 0) {
-      return res.status(404).json({
-        message: "User not found"
+
+      return res.status(401).json({
+        message: "Invalid credentials"
       });
     }
 
     const user = result.recordset[0];
+
+    const isMatch = await bcrypt.compare(
+      password,
+      user.PasswordHash
+    );
+
+    if (!isMatch) {
+
+      return res.status(401).json({
+        message: "Invalid credentials"
+      });
+    }
 
     const token = jwt.sign(
       {
@@ -42,15 +66,18 @@ async function login(req, res) {
       }
     );
 
-    console.log("JWT TOKEN GENERATED:");
-console.log(token);
-
     res.json({
       token,
-      user
+      user: {
+        userId: user.UserId,
+        fullName: user.FullName,
+        email: user.Email,
+        role: user.RoleName
+      }
     });
 
-  } catch (err) {
+  } catch(err) {
+
     console.error(err);
 
     res.status(500).json({
