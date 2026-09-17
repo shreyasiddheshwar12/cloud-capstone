@@ -41,3 +41,11 @@ variable "application_insights_name" {
   type    = string
   default = "appinsights-pharma12"
 }
+
+variable "eventgrid_topic_name" {
+  type = string
+}
+
+variable "logic_app_name" {
+  type = string
+}

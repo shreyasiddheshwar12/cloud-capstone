@@ -27,12 +27,12 @@ resource "azurerm_linux_web_app" "this" {
   }
 
   app_settings = {
-    NODE_ENV                  = "production"
-    PORT                      = "8080"
-    SQL_SERVER                = var.sql_server_fqdn
-    SQL_DATABASE              = var.sql_database_name
-    SQL_USER                  = var.sql_admin_login
-    SQL_PASSWORD              = var.sql_admin_password
+    NODE_ENV                              = "production"
+    PORT                                  = "8080"
+    SQL_SERVER                            = var.sql_server_fqdn
+    SQL_DATABASE                          = var.sql_database_name
+    SQL_USER                              = var.sql_admin_login
+    SQL_PASSWORD                          = var.sql_admin_password
     APPLICATIONINSIGHTS_CONNECTION_STRING = var.app_insights_connection_string
   }
 }

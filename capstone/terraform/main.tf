@@ -35,3 +35,22 @@ module "recall_api" {
   sql_admin_password             = var.sql_admin_password
   app_insights_connection_string = module.monitoring.connection_string
 }
+
+module "eventgrid" {
+  source = "./modules/eventgrid"
+
+  topic_name          = var.eventgrid_topic_name
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+}
+
+module "logicapp" {
+
+  source = "./modules/logicapp"
+
+  logic_app_name = var.logic_app_name
+
+  resource_group_name = data.azurerm_resource_group.rg.name
+
+  location = data.azurerm_resource_group.rg.location
+}
