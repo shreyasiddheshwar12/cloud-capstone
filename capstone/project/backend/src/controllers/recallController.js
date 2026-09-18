@@ -1,5 +1,7 @@
 const { sql, getConnection } = require("../db");
 
+const {publishRecallEvent} = require("../services/eventGridService")
+
 /*
   Creates an entry in AuditLog.
 
@@ -344,6 +346,13 @@ const publishRecall = async (req, res) => {
           WHERE RecallId = @recallId
             AND Status <> 'Published'
         `);
+
+        await publishRecallEvent({
+          recallId,
+          medicineCode: "UNKNOWN",
+          batchNumber: "UNKNOWN",
+          severity: "UNKNOWN"
+        });
 
       if (updateResult.rowsAffected[0] === 0) {
         await transaction.rollback();
